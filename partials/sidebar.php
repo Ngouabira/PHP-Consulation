@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+$role = $_SESSION['role'];
+?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
@@ -55,26 +60,28 @@
         </li>
 
         <!-- Layouts -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Layouts">Administration</div>
-            </a>
+        <?php if ($role == 'ADMIN') : ?>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                    <div data-i18n="Layouts">Administration</div>
+                </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
-                        <div data-i18n="Without menu">Utilisateurs</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                        <div data-i18n="Without navbar">Rôles</div>
-                    </a>
-                </li>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="layouts-without-menu.html" class="menu-link">
+                            <div data-i18n="Without menu">Utilisateurs</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="layouts-without-navbar.html" class="menu-link">
+                            <div data-i18n="Without navbar">Rôles</div>
+                        </a>
+                    </li>
 
-            </ul>
-        </li>
+                </ul>
+            </li>
+        <?php endif; ?>
 
 
         <!-- User interface -->

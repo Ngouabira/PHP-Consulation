@@ -1,4 +1,13 @@
-<?php require_once './partials/header.php'; ?>
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header('Location: /login');
+}
+
+
+
+require_once './partials/header.php'; ?>
 
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">

@@ -1,4 +1,11 @@
-<?php require_once '../../partials/header.php'; ?>
+<?php
+session_start();
+
+if (isset($_SESSION['email'])) {
+    header('Location: /');
+}
+
+require_once '../../partials/header.php'; ?>
 
 <?php require_once '../../core/dbconnect.php'; ?>
 
@@ -8,7 +15,7 @@
 <?php
 
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['register'])) {
 
     $errors = [];
 
@@ -30,7 +37,7 @@ if (isset($_POST['submit'])) {
 
     if (empty($errors)) {
         $password = password_hash($password, PASSWORD_BCRYPT);
-        $sql = "INSERT INTO user (name, email, password) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO user (name, email, password ) VALUES (?, ?, ?)";
         $stmt = $dbconnexion->prepare($sql);
         $stmt->bind_param("sss", $name, $email, $password);
         $stmt->execute();
@@ -73,7 +80,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     <?php endif; ?>
 
-                    <form id="formAuthentication" class="mb-3" action="register.php" method="POST">
+                    <form id="formAuthentication" class="mb-3" action="/register" method="POST">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nom</label>
                             <input
@@ -118,13 +125,13 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
 
-                        <input name="submit" type="submit" class="btn btn-primary d-grid w-100"/>
+                        <input name="register" type="submit" class="btn btn-primary d-grid w-100" />
 
                     </form>
 
                     <p class="text-center">
                         <span>Vous avez déjà un compte?</span>
-                        <a href="login.php">
+                        <a href="/login">
                             <span>Se connecter</span>
                         </a>
                     </p>

@@ -1,4 +1,11 @@
-<?php require_once '../../partials/header.php'; ?>
+<?php
+session_start();
+
+if (isset($_SESSION['email'])) {
+    header('Location: /');
+}
+
+require_once '../../partials/header.php'; ?>
 <?php require_once '../../core/dbconnect.php'; ?>
 <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
 <!-- Content -->
@@ -20,7 +27,10 @@ if (isset($_POST['submit'])) {
 
     if ($user) {
         if (password_verify($password, $user['password'])) {
-            $_SESSION['user'] = $user;
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['role'] = $user['role'];
             header("Location: /");
         } else {
             $errors['password'] = "Mot de passe incorrect";
@@ -57,7 +67,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     <?php endif; ?>
 
-                    <form id="formAuthentication" class="mb-3" action="login.php" method="POST">
+                    <form id="formAuthentication" class="mb-3" action="/login" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input
@@ -93,7 +103,7 @@ if (isset($_POST['submit'])) {
 
                     <p class="text-center">
                         <span>Nouveau sur notre plateforme?</span>
-                        <a href="register.php">
+                        <a href="/register">
                             <span>Créer un compte</span>
                         </a>
                     </p>
